@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
     //スタートストップボタン切り替え
     public void star_stop(View view){
 
-        TextView tv = (TextView) findViewById(R.id.start);
+        TextView tv = (TextView)findViewById(R.id.start);
 
         tv.setText("Stop");
     }
