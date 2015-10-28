@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Stopwatch_project1st</string>
-
+    <string name="start_stopbutton">開始</string>
+    <string name="resetbutton">リセット</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>

@@ -20,8 +20,8 @@ public class MainActivity extends ActionBarActivity {
     public void star_stop(View view){
 
         TextView tv = (TextView)findViewById(R.id.start);
-
         tv.setText("Stop");
+
     }
 
 
