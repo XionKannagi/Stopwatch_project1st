@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -14,17 +16,21 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    //スタートストップボタン切り替え
-    public void star_stop(View view){
-
-        TextView tv = (TextView)findViewById(R.id.start);
-        tv.setText("Stop");
+//開始ボタンを取りして　リスナーを登録する．
+        Button b = (Button)findViewById(R.id.start);
+//取り出したbに振る舞いを追加できる．
+        ClickListener listener = new ClickListener();
+        b.setOnClickListener(listener);
 
     }
 
-
+    class ClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v){
+            Button b = (Button) v;
+            b.setText("ストップ");
+        }
+    };
 
 
     @Override
