@@ -1,36 +1,66 @@
 package com.example.togane.stopwatch_project1st;
 
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    //Count mTime;
+    Button start,stop,reset;
+    private long stopTime;
+    private long startTime = 0;
+    private boolean isFirst = false;
+    private boolean isStart = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//開始ボタンを取りして　リスナーを登録する．
-        Button b = (Button)findViewById(R.id.start);
-//取り出したbに振る舞いを追加できる．
-        ClickListener listener = new ClickListener();
-        b.setOnClickListener(listener);
+
+        //mTime b = (Count)findViewById(R.id.Time);
+        start = (Button)findViewById(R.id.start);
+        reset = (Button)findViewById(R.id.reset);
+
+        start.setOnClickListener(new OnClickListener(){
+            @Override
+             public void onClick(View view) {
+                  if(!isStart){
+                     if (!isFirst){
+                        /*mTime.setBase(SystemClock.elapsedRealtime());
+                        startTime = SystemClock.elapsedRealtime();
+                        mTime.start();*/
+                        isFirst=true;
+                     }
+                     else{
+                        /*long time1 = stopTime - startTime;
+                        long time2 = SystemClock.elapsedRealtime() - time1;
+                        mTime.setBase(time2);
+                        mTime.start();
+                        startTime=time2;*/
+                     }
+                    isStart=true;
+                    start.setText("ストップ");
+                  }
+                  else if (isStart){
+                    /*stopTime = SystemClock.elapsedRealtime();
+                    mTime.stop();*/
+                    isStart=false;
+                    start.setText("開始");
+                  }
+             }
+        });
 
     }
 
-    class ClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v){
-            Button b = (Button) v;
-            b.setText("ストップ");
-        }
-    };
 
 
     @Override
