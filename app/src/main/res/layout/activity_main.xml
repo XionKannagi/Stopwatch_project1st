@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:text="リセット"
             android:textColor="#FF1EFF40"
-            />
+                        />
 
         </LinearLayout>
     </LinearLayout>
