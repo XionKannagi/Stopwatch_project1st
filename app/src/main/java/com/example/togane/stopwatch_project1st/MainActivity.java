@@ -1,5 +1,6 @@
 package com.example.togane.stopwatch_project1st;
 
+import android.app.Activity;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,8 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.TextView;
-import java.sql.Time;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -32,33 +31,31 @@ public class MainActivity extends ActionBarActivity {
         start = (Button)findViewById(R.id.start);
         reset = (Button)findViewById(R.id.reset);
 
-        start.setOnClickListener(new OnClickListener(){
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
-             public void onClick(View view) {
-                  if(!isStart){
-                     if (!isFirst){
+            public void onClick(View v) {
+                if (!isStart) {
+                    if (!isFirst) {
                         mChronometer.setBase(SystemClock.elapsedRealtime());
                         startTime = SystemClock.elapsedRealtime();
                         mChronometer.start();
-                        isFirst=true;
-                     }
-                     else{
+                        isFirst = true;
+                    } else {
                         long time1 = stopTime - startTime;
                         long time2 = SystemClock.elapsedRealtime() - time1;
                         mChronometer.setBase(time2);
                         mChronometer.start();
                         startTime=time2;
-                     }
-                    isStart=true;
+                    }
+                    isStart = true;
                     start.setText("ストップ");
-                  }
-                  else if (isStart){
+                } else if (isStart) {
                     stopTime = SystemClock.elapsedRealtime();
                     mChronometer.stop();
-                    isStart=false;
+                    isStart = false;
                     start.setText("開始");
-                  }
-             }
+                }
+            }
         });
 
         reset.setOnClickListener(new View.OnClickListener() {
