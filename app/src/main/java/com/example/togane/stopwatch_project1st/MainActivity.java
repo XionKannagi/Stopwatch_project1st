@@ -8,12 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
+import java.sql.Time;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    //Count mTime;
+    Chronometer mChronometer;
     Button start,stop,reset;
     private long stopTime;
     private long startTime = 0;
@@ -26,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mTime b = (Count)findViewById(R.id.Time);
+        mChronometer = (Chronometer)findViewById(R.id.chronometer);
         start = (Button)findViewById(R.id.start);
         reset = (Button)findViewById(R.id.reset);
 
@@ -35,30 +37,42 @@ public class MainActivity extends ActionBarActivity {
              public void onClick(View view) {
                   if(!isStart){
                      if (!isFirst){
-                        /*mTime.setBase(SystemClock.elapsedRealtime());
+                        mChronometer.setBase(SystemClock.elapsedRealtime());
                         startTime = SystemClock.elapsedRealtime();
-                        mTime.start();*/
+                        mChronometer.start();
                         isFirst=true;
                      }
                      else{
-                        /*long time1 = stopTime - startTime;
+                        long time1 = stopTime - startTime;
                         long time2 = SystemClock.elapsedRealtime() - time1;
-                        mTime.setBase(time2);
-                        mTime.start();
-                        startTime=time2;*/
+                        mChronometer.setBase(time2);
+                        mChronometer.start();
+                        startTime=time2;
                      }
                     isStart=true;
                     start.setText("ストップ");
                   }
                   else if (isStart){
-                    /*stopTime = SystemClock.elapsedRealtime();
-                    mTime.stop();*/
+                    stopTime = SystemClock.elapsedRealtime();
+                    mChronometer.stop();
                     isStart=false;
                     start.setText("開始");
                   }
              }
         });
 
+        reset.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                mChronometer.stop();
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                start.setText("開始");
+                isFirst = false;
+                isStart = false;
+
+            }
+        });
     }
 
 

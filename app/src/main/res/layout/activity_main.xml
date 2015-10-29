@@ -17,9 +17,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="5"
-            android:text="0:00"
+            android:text="Chronometer"
             android:textSize="100dp"
-            android:id="@+id/Time" />
+            android:id="@+id/chronometer" />
 
         <LinearLayout
         android:orientation="vertical"
