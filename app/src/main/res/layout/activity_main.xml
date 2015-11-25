@@ -41,7 +41,8 @@
             android:textColor="#ffffff"
             android:background="#42a9e1"
             android:layout_margin="5dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
 
         <Button
