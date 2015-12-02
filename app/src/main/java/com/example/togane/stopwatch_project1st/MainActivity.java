@@ -1,6 +1,6 @@
 package com.example.togane.stopwatch_project1st;
 
-import android.app.Activity;
+
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
@@ -9,16 +9,12 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimeZone;
-import java.util.logging.LogRecord;
+
 
 
 public class MainActivity extends ActionBarActivity {
@@ -62,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
                         //mChronometer.setBase(time2);
                         //mChronometer.start();
                         loopEngine.start();
-                        startTime=time2;
+                        startTime = time2;
                     }
                     isStart = true;
                     start.setText("ストップ");
@@ -97,7 +93,8 @@ public class MainActivity extends ActionBarActivity {
     public void Uptdate(){
 
         SimpleDateFormat date = new SimpleDateFormat("hh:mm:ss.SSS");
-        date.setTimeZone(TimeZone.getTimeZone("JST"));
+        //タイムゾーン指定でズレがなくせるらしい
+        date.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         long nowTime = System.currentTimeMillis();
         long time = (System.currentTimeMillis()-startTime)+tmpTime;
