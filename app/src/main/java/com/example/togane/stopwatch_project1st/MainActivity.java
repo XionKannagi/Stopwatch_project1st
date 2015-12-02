@@ -1,9 +1,11 @@
 package com.example.togane.stopwatch_project1st;
 
 import android.app.Activity;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,15 +14,24 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.logging.LogRecord;
+
 
 public class MainActivity extends ActionBarActivity {
 
-    Chronometer mChronometer;
+    //Chronometer mChronometer;
+    TextView mTimer;
     Button start,stop,reset;
-    private long stopTime;
+    private long stopTime,tmpTime;
     private long startTime = 0;
     private boolean isFirst = false;
     private boolean isStart = false;
+    private LoopEngine loopEngine = new LoopEngine();
+
 
 
     @Override
@@ -28,7 +39,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mChronometer = (Chronometer)findViewById(R.id.chronometer);
+        //mChronometer = (Chronometer)findViewById(R.id.chronometer);
+        mTimer =(TextView)findViewById(R.id.timecount);
         start = (Button)findViewById(R.id.start);
         reset = (Button)findViewById(R.id.reset);
 
@@ -37,22 +49,29 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (!isStart) {
                     if (!isFirst) {
-                        mChronometer.setBase(SystemClock.elapsedRealtime());
-                        startTime = SystemClock.elapsedRealtime();
-                        mChronometer.start();
+                        //mChronometer.setBase(SystemClock.elapsedRealtime());
+                        startTime = System.currentTimeMillis();
+                        //mChronometer.start();
+                        loopEngine.start();
+                        tmpTime = System.currentTimeMillis()-startTime;
+
                         isFirst = true;
                     } else {
                         long time1 = stopTime - startTime;
-                        long time2 = SystemClock.elapsedRealtime() - time1;
-                        mChronometer.setBase(time2);
-                        mChronometer.start();
+                        long time2 = System.currentTimeMillis() - time1;
+                        //mChronometer.setBase(time2);
+                        //mChronometer.start();
+                        loopEngine.start();
                         startTime=time2;
                     }
                     isStart = true;
                     start.setText("ストップ");
                 } else if (isStart) {
-                    stopTime = SystemClock.elapsedRealtime();
-                    mChronometer.stop();
+
+                    stopTime = System.currentTimeMillis();
+                    loopEngine.stop();
+                    //stopTime = SystemClock.elapsedRealtime();
+                    //mChronometer.stop();
                     isStart = false;
                     start.setText("開始");
                 }
@@ -63,14 +82,58 @@ public class MainActivity extends ActionBarActivity {
 
             public void onClick(View v) {
 
-                mChronometer.stop();
-                mChronometer.setBase(SystemClock.elapsedRealtime());
+                loopEngine.stop();
+                mTimer.setText("00:00:00.000");
+                //mChronometer.stop();
+                //mChronometer.setBase(SystemClock.elapsedRealtime());
                 start.setText("開始");
                 isFirst = false;
                 isStart = false;
 
             }
         });
+    }
+    //ミリ秒単位で計測を可能にする
+    public void Uptdate(){
+
+        SimpleDateFormat date = new SimpleDateFormat("hh:mm:ss.SSS");
+        date.setTimeZone(TimeZone.getTimeZone("JST"));
+
+        long nowTime = System.currentTimeMillis();
+        long time = (System.currentTimeMillis()-startTime)+tmpTime;
+        mTimer.setText(date.format(time));
+
+    }
+
+
+    public class LoopEngine extends Handler{
+        private boolean isUpdate;
+
+        public void start(){
+
+            this.isUpdate = true;
+            handleMessage(new Message());
+
+        }
+
+        public void stop(){
+
+            this.isUpdate = false;
+
+        }
+
+        @Override
+        public void handleMessage(Message msg){
+            this.removeMessages(0);
+            if(this.isUpdate){
+                MainActivity.this.Uptdate();
+                sendMessageDelayed(obtainMessage(0),1);
+            }
+
+
+
+        }
+
     }
 
 
@@ -96,4 +159,12 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
+
 }
