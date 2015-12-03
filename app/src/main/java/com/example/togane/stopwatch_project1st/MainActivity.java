@@ -92,12 +92,13 @@ public class MainActivity extends ActionBarActivity {
     //ミリ秒単位で計測を可能にする
     public void Uptdate(){
 
-        SimpleDateFormat date = new SimpleDateFormat("hh:mm:ss.SSS");
-        //タイムゾーン指定でズレがなくせるらしい
-        date.setTimeZone(TimeZone.getTimeZone("GMT"));
+        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss.SSS");
+
 
         long nowTime = System.currentTimeMillis();
         long time = (System.currentTimeMillis()-startTime)+tmpTime;
+        //タイムゾーン指定でズレがなくせるらしい
+        date.setTimeZone(TimeZone.getTimeZone("GMT"));
         mTimer.setText(date.format(time));
 
     }
